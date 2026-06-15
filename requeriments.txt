@@ -1,0 +1,4 @@
+flask
+nibabel
+numpy
+matplotlib

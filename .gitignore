@@ -1,0 +1,3 @@
+# Archivos NIfTI (imágenes médicas)
+*.nii
+*.nii.gz

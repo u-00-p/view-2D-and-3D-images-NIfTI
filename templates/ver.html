@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <img id="img_sagital" src="data:image/png;base64,{{ imagen_sagital }}">
+        <input 
+            type="range" 
+            id="slider_sagital" 
+            min="0" 
+            max="{{ max_sagital }}" 
+            value="{{ inicio_sagital }}"
+        >
+        <p>Frame Sagital: <span id="respuesta_sagital">{{ inicio_sagital }}</span></p>
+    </div>
+    <div>
+        <img id="img_coronal" src="data:image/png;base64,{{ imagen_coronal }}">
+        <input 
+            type="range" 
+            id="slider_coronal" 
+            min="0" 
+            max="{{ max_coronal }}" 
+            value="{{ inicio_coronal }}"
+        >
+        <p>Frame Coronal: <span id="respuesta_coronal">{{ inicio_coronal }}</span></p>
+    </div>
+    <div>
+        <img id="img_axial" src="data:image/png;base64,{{ imagen_axial }}">
+        <input 
+            type="range" 
+            id="slider_axial" 
+            min="0" 
+            max="{{ max_axial }}" 
+            value="{{ inicio_axial }}"
+        >
+        <p>Frame Axial: <span id="respuesta_axial">{{ inicio_axial }}</span></p>
+    </div>
+
+    <div>
+        <form action="/descargar" method="POST">
+            <button type="submit">Descargar Frames</button>
+        </form>
+    </div>
+
+    <div>
+        <form action="/" method="GET">
+            <button type="submit">regresar</button>
+        </form>
+    </div>
+    
+
+    <script>
+        const slider_sagital = document.getElementById("slider_sagital");
+        const etiquetaRespuesta_sagital = document.getElementById("respuesta_sagital");
+        const img_sagital = document.getElementById("img_sagital");
+        let temporizador_sagital;
+        let enviando_sagital = false;
+        slider_sagital.addEventListener("input", function() {
+            if (enviando_sagital) return;
+            enviando_sagital = true;
+
+            fetch("/slider_sagital", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ intensidad: parseInt(this.value) })
+            })
+            .then(res => res.json())
+            .then(data => {
+                img_sagital.src = "data:image/png;base64," + data.imagen;
+                document.getElementById("respuesta_sagital").textContent = data.intensidad;
+                enviando_sagital = false;
+            });
+        });
+        slider_sagital.addEventListener("wheel", function(e) {
+            e.preventDefault();
+            const direccion = e.deltaY > 0 ? 1 : -1;
+            
+            const nuevoValor = parseInt(this.value) + direccion;
+            this.value = nuevoValor;
+            this.dispatchEvent(new Event("input"));
+        }, { passive: false });
+    </script>
+
+
+    <script>
+        const slider_coronal = document.getElementById("slider_coronal");
+        const etiquetaRespuesta_coronal = document.getElementById("respuesta_coronal");
+        const img_coronal = document.getElementById("img_coronal")
+        let temporizador_coronal;
+        let enviando_coronal = false;
+        slider_coronal.addEventListener("input", function() {
+            if (enviando_coronal) return;
+            enviando_coronal = true;
+
+            fetch("/slider_coronal", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ intensidad: parseInt(this.value) })
+            })
+            .then(res => res.json())
+            .then(data => {
+                img_coronal.src = "data:image/png;base64," + data.imagen;
+                document.getElementById("respuesta_coronal").textContent = data.intensidad;
+                enviando_coronal = false;
+            });
+        });
+        slider_coronal.addEventListener("wheel", function(e) {
+            e.preventDefault();
+            const direccion = e.deltaY > 0 ? 1 : -1;
+            
+            const nuevoValor = parseInt(this.value) + direccion;
+            this.value = nuevoValor;
+            this.dispatchEvent(new Event("input"));
+        }, { passive: false });
+    </script>
+
+
+    <script>
+        const slider_axial = document.getElementById("slider_axial");
+        const etiquetaRespuesta_axial = document.getElementById("respuesta_axial");
+        const img_axial = document.getElementById("img_axial")
+        let temporizador_axial;
+        let enviando_axial = false;
+        slider_axial.addEventListener("input", function() {
+            if (enviando_axial) return;
+            enviando_axial = true;
+
+            fetch("/slider_axial", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ intensidad: parseInt(this.value) })
+            })
+            .then(res => res.json())
+            .then(data => {
+                img_axial.src = "data:image/png;base64," + data.imagen;
+                document.getElementById("respuesta_axial").textContent = data.intensidad;
+                enviando_axial = false;
+            });
+        });
+        slider_axial.addEventListener("wheel", function(e) {
+            e.preventDefault();
+            const direccion = e.deltaY > 0 ? 1 : -1;
+            
+            const nuevoValor = parseInt(this.value) + direccion;
+            this.value = nuevoValor;
+            this.dispatchEvent(new Event("input"));
+        }, { passive: false });
+    </script>
+</body>
+</html>
