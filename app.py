@@ -18,6 +18,27 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 data_global = None
 
+
+# funciones para el modelo
+def predecir():
+    return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """ FUNCIONES PARA GENERAR RECORTES DE LAS IMAGENES EN 3D  
     funciones auxiliares para los recortes y la generacion de las
     imagenes
